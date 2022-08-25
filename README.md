@@ -23,19 +23,23 @@ This package will help to validate azure b2c jwt token.
 
 - To Start experimenting this package you need to install it.
 
-- [Step - 1]
 ```
-
     pip install aadinspector
-
 ```
- jwt_validator = JWTValidator("{tenant_id}")
-    #jwt_validator.set_name_of_policy("name_of_policy")
-    is_verified, token = jwt_validator.validate("{encoded_token}")
-    # if token is verified then is_verified=True if not it will be False
-    # if token verified you will get decoded token in token else error.
+```
+    # public key code should run only once on app start.
+    pub_handler=  PublicKeyHandler("62105d2a-48a0-4651-8d84-5a5e197fba03")
+    pub_handler.set_name_of_policy("b2c_1a_giadataportal__signup_signin")
+    token="string"
+    public_key= pub_handler.get_public_key(token)
+    print(public_key)
+    
+    # token validation code should run for each request.
+    jwt_validator = JWTValidator(public_key)
+    is_valid, token = jwt_validator.validate(token)
     print(is_valid)
     print(token)
+
 ```
 
 ## ✍️ Authors <a name = "authors"></a>
